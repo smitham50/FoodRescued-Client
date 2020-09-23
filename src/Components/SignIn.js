@@ -1,5 +1,4 @@
 import React from "react";
-
 //Styles
 import './signin.scss'
 
@@ -15,13 +14,12 @@ class SignIn extends React.Component {
 
 
     handleChange = (event) => {
-    console.log(event.target.value)
-    this.setState({
-        [event.target.name]: event.target.value
-    })
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
-    handleSubmit = (event) => {
+    handleSignup = (event) => {
         event.preventDefault()
 
         fetch('http://localhost:3000/api/v1/signup', {
@@ -30,7 +28,7 @@ class SignIn extends React.Component {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-                body: JSON.stringify({
+            body: JSON.stringify({
                 "user": {
                     username: this.state.username,
                     password: this.state.password,
@@ -46,10 +44,35 @@ class SignIn extends React.Component {
             if (response.errors) {
                 alert(response.errors)
             } else {
-                //this is where we'll set the user on the front end
-                // this.props.setUser(response)
+                this.props.setUser(response)
             }
         })
+    }
+
+    handleLogin = (event) => {
+        event.preventDefault()
+
+        fetch('http://localhost:3000/api/v1/login', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                "user": {
+                    username: this.state.username,
+                    password: this.state.password,
+                }
+            })
+        })
+            .then(resp => resp.json())
+            .then(response => {
+                if (response.errors) {
+                    alert(response.errors)
+                } else {
+                    this.props.setUser(response)
+                }
+            })
     }
 
     render() {
@@ -60,7 +83,7 @@ class SignIn extends React.Component {
                         <img className="box__image" src="https://picsum.photos/300"/>
                     
                     {/* Sign up form */}
-                    <form className="form form__register" action="" onSubmit={this.handleSubmit}>
+                    <form className="form form__register" action="" onSubmit={this.handleSignup}>
                         <h1 className="form__title">Sign Up</h1>
                         {/* Username */}
                         <div className="form__helper">
@@ -103,20 +126,20 @@ class SignIn extends React.Component {
                     {/* ---------------------- */}
 
                     {/* Sign In form (default) */}
-                    <form className="form form__register" action="" onSubmit={this.handleSubmit}>
+                    <form className="form form__register" action="" onSubmit={this.handleLogin}>
                         <h1 className="form__title">Sign In</h1>
 
                         {/* User */}
                         <div className="form__helper">
-                            <input className="form__input" id="new-user" type="text" name="user" placeholder="User" onChange={this.handleChange}></input>
-                            <label className="form__label" for="new-user">User</label>
+                            <input className="form__input" id="username" type="text" name="username" placeholder="Username" onChange={this.handleChange}></input>
+                            <label className="form__label" for="username">User</label>
                         </div>
 
                         {/* Password */}
                         <div className="form__helper">
-                            <input className="form__input" type="password" name="password" id="new-user-password"
+                            <input className="form__input" type="password" name="password" id="password"
                                     placeholder="Password" onChange={this.handleChange}></input>
-                            <label className="form__label" for="new-user-password">Password</label>
+                            <label className="form__label" for="password">Password</label>
                         </div>
 
                         {/* Submit Button */}
@@ -124,7 +147,6 @@ class SignIn extends React.Component {
                         <p className="form__text">Don't have an account?</p>
                         <label for="toggle" className="form__link">Sign Up!</label>
                     </form>
-
                 </div>
             </div>
         )
