@@ -75,12 +75,31 @@ class SignIn extends React.Component {
             })
     }
 
+    //This should be in navbar component
+    // handleLogout = () => {
+    //     fetch('http://localhost:3000/api/v1/logout', {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Accept": "application/json"
+    //         }
+    //     })
+    //         .then(resp => resp.json())
+    //         .then(response => {
+    //             if (response.errors) {
+    //                 alert(response.errors)
+    //             } else {
+    //                 this.props.clearUser()
+    //             }
+    //         })
+    // }
+
     render() {
         return(
             <div className="signIn">
                 <div className="box">
                     <input type="checkbox" id="toggle" className="box__toggle" hidden/>
-                        <img className="box__image" src="https://picsum.photos/300"/>
+                        <img className="box__image" src="https://picsum.photos/300" alt="missing" />
                     
                     {/* Sign up form */}
                     <form className="form form__register" action="" onSubmit={this.handleSignup}>

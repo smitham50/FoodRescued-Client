@@ -14,15 +14,22 @@ class App extends React.Component {
     this.setState({
       currentUser: user
     }, () => {
-      localStorage.user_id = user.id
+      localStorage.authentication_token = user.user.authentication_token
     })
-    debugger
+  }
+
+  clearUser = () => {
+    this.setState({
+      currentUser: null
+    }), () => {
+      localStorage.clear()
+    }
   }
 
   render() {
     return (
       <div className="App">
-        <SignIn setUser={this.setUser}></SignIn>
+        <SignIn setUser={this.setUser} clearUser={this.clearUser}></SignIn>
       </div>
     )
   }
